@@ -87,7 +87,7 @@ type CommandType = NoteOn
   | SystemReset
   | SingleByte
 
-interface ParsedCommands {
+export interface ParsedCommands {
   error?: string;
   commands: CommandType[]
 }
@@ -109,7 +109,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
       if (byte > 255) throw new Error('Byte out of range - greater than 255')
 
       if (byte >= 128 && byte <= 143) {
-        console.log("Note Off")
+        // console.log("Note Off")
         message = {
           type: "note-off",
           channel: byte - 128,
@@ -120,7 +120,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-note"
 
       } else if (byte >= 144 && byte <= 159) {
-        console.log("Note On")
+        // console.log("Note On")
         message = {
           type: "note-on",
           channel: byte - 144,
@@ -131,7 +131,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-note"
 
       } else if (byte >= 160 && byte <= 175) {
-        console.log("Poly Aftertouch")
+        // console.log("Poly Aftertouch")
         message = {
           type: "poly-aftertouch",
           channel: byte - 160,
@@ -141,7 +141,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-note"
 
       } else if (byte >= 176 && byte <= 191) {
-        console.log("Control Change")
+        // console.log("Control Change")
         message = {
           type: "control-change",
           channel: byte - 176,
@@ -151,7 +151,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-controller"
 
       } else if (byte >= 192 && byte <= 207) {
-        console.log("Program Change")
+        // console.log("Program Change")
         message = {
           type: "program-change",
           channel: byte - 192,
@@ -161,7 +161,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-program"
 
       } else if (byte >= 208 && byte <= 223) {
-        console.log("Channel Aftertouch")
+        // console.log("Channel Aftertouch")
         message = {
           type: "channel-aftertouch",
           channel: byte - 208,
@@ -171,7 +171,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-channel-pressure"
 
       } else if (byte >= 224 && byte <= 239) {
-        console.log("Pitch Bend")
+        // console.log("Pitch Bend")
         message = {
           type: "pitch-bend",
           channel: byte - 224,
@@ -181,30 +181,30 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         state = "awaiting-pitch-lsb"
 
       } else if (byte == 243) {
-        console.log("Song Select")
+        // console.log("Song Select")
         message = { type: "song-select", song: 0, data: [243] }
         state = "awaiting-song"
 
       } else if (byte == 250) {
-        console.log("Start")
+        // console.log("Start")
         message = { type: "start", }
         messages.push(message)
         state = "awaiting-control-byte"
 
       } else if (byte == 251) {
-        console.log("Continue")
+        // console.log("Continue")
         message = { type: "continue", }
         messages.push(message)
         state = "awaiting-control-byte"
 
       } else if (byte == 252) {
-        console.log("Stop")
+        // console.log("Stop")
         message = { type: "stop", }
         messages.push(message)
         state = "awaiting-control-byte"
 
       } else if (byte == 255) {
-        console.log("System reset")
+        // console.log("System reset")
         message = { type: "system-reset", data: [255] }
         messages.push(message)
         state = "awaiting-control-byte"
@@ -219,7 +219,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         case "awaiting-note":
           if (!message) throw new Error('NO MESSAGE HERE')
           if (message.type === "note-off" || message.type === "note-on") {
-            console.log("NOTE", byte)
+            // console.log("NOTE", byte)
             message.note = byte
             message.data[1] = byte
             state = "awaiting-velocity"
@@ -229,7 +229,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         case "awaiting-velocity":
           if (!message) throw new Error('NO MESSAGE HERE')
           if (message.type === "note-off" || message.type === "note-on") {
-            console.log("VEL", byte)
+            // console.log("VEL", byte)
             message.velocity = byte
             message.data[2] = byte
             addMessageToMessages()
@@ -277,7 +277,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         case "awaiting-pitch-lsb":
           if (!message) throw new Error('NO MESSAGE HERE')
           if (message.type === "pitch-bend") {
-            console.log("pitch lsb", byte)
+            // console.log("pitch lsb", byte)
             message.pitch = byte
             message.data[1] = byte
             state = "awaiting-pitch-msb"
@@ -287,7 +287,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         case "awaiting-song":
           if (!message) throw new Error('NO MESSAGE HERE')
           if (message.type === "song-select") {
-            console.log("Song Number", byte)
+            // console.log("Song Number", byte)
             message.song = byte
             message.data[1] = byte
             addMessageToMessages()
@@ -298,7 +298,7 @@ export const parseMidi = (packet: number[]): ParsedCommands => {
         case "awaiting-pitch-msb":
           if (!message) throw new Error('NO MESSAGE HERE')
           if (message.type === "pitch-bend") {
-            console.log("pitch msb", byte)
+            // console.log("pitch msb", byte)
             message.pitch = (byte << 7) | message.pitch
             message.data[2] = byte
             addMessageToMessages()
