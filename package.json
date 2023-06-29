@@ -51,6 +51,6 @@
     "size-limit": "^8.2.6",
     "tsdx": "^0.14.1",
     "tslib": "^2.6.0",
-    "typescript": "^5.1.5"
+    "typescript": "^5.1.6"
   }
 }
