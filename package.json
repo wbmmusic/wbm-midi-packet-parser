@@ -20,7 +20,6 @@
     "analyze": "size-limit --why",
     "backup": "git add . && git commit -m %NPM_PACKAGE_VERSION% && git push origin main"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -50,7 +49,8 @@
     "husky": "^9.0.11",
     "size-limit": "^11.1.4",
     "tsdx": "^0.14.1",
-    "tslib": "^2.6.2",
+    "tslib": "^2.6.3",
     "typescript": "^5.4.5"
-  }
+  },
+  "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
 }
