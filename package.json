@@ -46,7 +46,7 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^12.1.0",
-    "bunchee": "^6.10.0",
+    "bunchee": "^6.11.0",
     "husky": "^9.1.7",
     "size-limit": "^12.1.0",
     "tsdx": "^2.0.0",
